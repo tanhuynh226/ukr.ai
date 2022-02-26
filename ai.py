@@ -15,9 +15,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def answer(prompt):
     response = openai.Classification.create(
-    file = "file-ONAi4SXDpEUAdC3YaCtB2ZB9",
+    file = "file-R5VA59nOEqhU4L0QgR3EyGTK",
     query = prompt,
-    search_model = "ada", 
+    search_model = "curie", 
     model = "curie", 
     labels = ["NOT_MISLEADING", "MISINFORMED_OR_POTENTIALLY_MISLEADING"],
     max_examples = 200)
@@ -28,20 +28,14 @@ def answer(prompt):
 
 def main():
     response = openai.Classification.create(
-    file = "file-pLp74SVfdDJsyvTAen8ZZeD2",
-    query = "Russia plans to kill any Ukrainians that refuse to surrender",
-#     examples = [
-#         ["Ukraine did not start the conflict with Russia.", "NOT_MISLEADING"],
-#         ["Russia wanted to fight Ukraine.", "NOT_MISLEADING"],
-#         ["Ukraine initiated the conflict with Russia.", "MISINFORMED_OR_POTENTIALLY_MISLEADING"],
-#         ["Russia initiated the conflict with Ukraine.", "NOT_MISLEADING"]
-#     ],
-    search_model = "ada", 
+    file = "file-R5VA59nOEqhU4L0QgR3EyGTK",
+    query = "Russia started the conflict with Ukraine.",
+    search_model = "curie", 
     model = "curie", 
     labels = ["NOT_MISLEADING", "MISINFORMED_OR_POTENTIALLY_MISLEADING"],
     max_examples = 200)
     
-    print(response)
+    print(response['label'])
 
 if __name__ == "__main__":
     main()
