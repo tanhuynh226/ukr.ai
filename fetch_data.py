@@ -2,8 +2,6 @@ from venv import create
 import pandas as pd
 import requests
 import re
-import os
-from dotenv import load_dotenv
 from statistics import mode
 
 import tweets
@@ -11,8 +9,6 @@ import tweets
 DATA_FILE = 'notes-00000.tsv'
 ENDPOINT = 'https://api.twitter.com/2/tweets'
 
-load_dotenv()
-BEARER_TOKEN = os.getenv("TWITTER_BEARER_TOKEN")
 
 def read_data(filename):
     data = pd.read_csv(filename, sep='\t')
