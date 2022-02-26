@@ -6,9 +6,6 @@ from statistics import mode
 
 import tweets
 
-
-#tans: BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAIKlZgEAAAAA%2FPzTUcIMxE%2F1YSRh2b60shhO6C4%3DJFNP2ksUXD7qgTGxmhmkG6DHiCL4FvwNHR9gfLujioOff430au' 
-BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAHCXZgEAAAAAsFWHTYPNRHdi7ogP8CUBN%2FoM9QQ%3D1Id3Z7UFSoiCrknB7zA2BucLTzdpwgG3hdMY4cz5a5IvrzRYoL'
 DATA_FILE = 'notes-00000.tsv'
 ENDPOINT = 'https://api.twitter.com/2/tweets'
 
@@ -16,24 +13,6 @@ ENDPOINT = 'https://api.twitter.com/2/tweets'
 def read_data(filename):
     data = pd.read_csv(filename, sep='\t')
     return data
-
-
-def create_headers(bearer_token):
-    headers = {"Authorization": f"Bearer {bearer_token}"}
-    return headers
-
-
-def query(ids):
-
-    def format_ids(ids):
-        """Takes input of nparray of IDs and outputs comma separated strings"""
-        return ','.join(str(id) for id in ids)
-
-    params = {
-        'ids': format_ids(ids),
-        'tweet.fields': 'entities'
-    }
-    return params
 
 
 def get_label_by_id(data, id):
@@ -63,9 +42,8 @@ def process_data(data, keywords):
     # Send one request per 100 tweets using their IDs
     ids = data.tweetId.values
     id_list = chunk(ids, 100)
-    count=0
     for id_chunk in id_list:
-        for tweet in (tweet for tweet in tweets.fetch_tweets(create_headers(BEARER_TOKEN), params=query(id_chunk)) if is_relevant(tweet, keywords, fetched_data)):
+        for tweet in (tweet for tweet in tweets.fetch_tweets_from_ids(id_chunk) if is_relevant(tweet, keywords, fetched_data)):
                 # If not a duplicate tweet, clean it up and include it in our dataset
                 fetched_data['text'].append(tweets.get_clean_text(tweet))
                 fetched_data['label'].append(get_label_by_id(data, tweet['id']))
@@ -83,5 +61,5 @@ if __name__ == '__main__':
         keywords = keywords.split('\n')
 
     data = process_data(read_data(DATA_FILE), keywords)
-    data.to_csv("training_data.csv", encoding='utf-8', index=False)
+    data.to_csv("training_data1.csv", encoding='utf-8', index=False)
 
