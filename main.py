@@ -7,10 +7,6 @@ def get_answer(request):
     Returns:
         AI's response to given prompt
     """
-    request_json = request.get_json()
-    if request.args and 'message' in request.args:
-        return answer(request.args.get('message'))
-    elif request_json and 'message' in request_json:
-        return answer(request_json['message'])
-    else:
-        return f'No prompt given.'
+    user_prompt = str(request.get_data())
+    result = answer(user_prompt)
+    return result
