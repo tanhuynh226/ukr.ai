@@ -1,7 +1,10 @@
+from venv import create
 import pandas as pd
 import requests
 import re
 from statistics import mode
+
+import tweets
 
 
 #tans: BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAIKlZgEAAAAA%2FPzTUcIMxE%2F1YSRh2b60shhO6C4%3DJFNP2ksUXD7qgTGxmhmkG6DHiCL4FvwNHR9gfLujioOff430au' 
@@ -37,52 +40,48 @@ def get_label_by_id(data, id):
     return ''.join(mode(data[data.tweetId == int(id)].classification))
 
 
-def process_data(data):
-    ids = data.tweetId.values
+# Returns True if keyword tweet contains keywords and is not duplicate 
+def is_relevant(tweet, keywords, current_data):
+    return tweet['id'] not in current_data['metadata'] and any(f' {word} ' in tweet['text'].lower() for word in keywords)
 
-    with open("keywords.txt") as file:
-        keywords = file.read().lower()
-        keywords = keywords.split('\n')
+
+
+# Takes Birdwatch data and relevant keywords
+# Returns dataframe containing relevant training data in format text,label,metadata
+# Metadata is tweet ID
+def process_data(data, keywords):
+    
+    fetched_data = {'text':[], 
+                    'label':[], 
+                    'metadata':[]}   
 
     def chunk(lst, n):
         """Yield successive n-sized chunks"""
         for i in range(0, len(lst), n):
             yield lst[i:i + n]
 
-    fetched_data = {'text':[], 
-                    'label':[], 
-                    'metadata':[]}        
-                    
+    # Send one request per 100 tweets using their IDs
+    ids = data.tweetId.values
     id_list = chunk(ids, 100)
+    count=0
     for id_chunk in id_list:
-        # Send one request per 100 tweets
-        response = requests.get(ENDPOINT, headers=create_headers(BEARER_TOKEN), params=query(id_chunk))
-
-        if response.status_code != 200:
-            raise Exception(response.status_code, response.text)
-
-        for tweet in response.json()['data']:
-            if tweet['id'] not in fetched_data['metadata'] and any(f' {x} ' in tweet['text'].lower() for x in keywords):
-                text = tweet['text']
-                if 'entities' in tweet:
-                    # Remove links
-                    if 'urls' in tweet['entities']:
-                        for url in tweet['entities']['urls']:
-                            text = re.sub(fr'{url["url"]}+', ' ', str(text))
-                    
-                    # Remove mentions
-                    if 'mentions' in tweet['entities']:
-                        for mention in tweet['entities']['mentions']:
-                            text = re.sub(fr'@{mention["username"]}+', ' ', str(text))
-
-                fetched_data['text'].append(text)
+        for tweet in (tweet for tweet in tweets.fetch_tweets(create_headers(BEARER_TOKEN), params=query(id_chunk)) if is_relevant(tweet, keywords, fetched_data)):
+                # If not a duplicate tweet, clean it up and include it in our dataset
+                fetched_data['text'].append(tweets.get_clean_text(tweet))
                 fetched_data['label'].append(get_label_by_id(data, tweet['id']))
                 fetched_data['metadata'].append(tweet['id'])
 
-    del fetched_data['metadata'] # TODO: remove metadata?
+    #del fetched_data['metadata'] # TODO: remove metadata?
     return pd.DataFrame(fetched_data)
 
 
+
+
 if __name__ == '__main__':
-    process_data(read_data(DATA_FILE)).to_csv("training_data.csv", encoding='utf-8', index=False)
+    with open("keywords.txt") as file:
+        keywords = file.read().lower()
+        keywords = keywords.split('\n')
+
+    data = process_data(read_data(DATA_FILE), keywords)
+    data.to_csv("training_data.csv", encoding='utf-8', index=False)
 
