@@ -2,16 +2,17 @@ from venv import create
 import pandas as pd
 import requests
 import re
+import os
+from dotenv import load_dotenv
 from statistics import mode
 
 import tweets
 
-
-#tans: BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAIKlZgEAAAAA%2FPzTUcIMxE%2F1YSRh2b60shhO6C4%3DJFNP2ksUXD7qgTGxmhmkG6DHiCL4FvwNHR9gfLujioOff430au' 
-BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAHCXZgEAAAAAsFWHTYPNRHdi7ogP8CUBN%2FoM9QQ%3D1Id3Z7UFSoiCrknB7zA2BucLTzdpwgG3hdMY4cz5a5IvrzRYoL'
 DATA_FILE = 'notes-00000.tsv'
 ENDPOINT = 'https://api.twitter.com/2/tweets'
 
+load_dotenv()
+BEARER_TOKEN = os.getenv("TWITTER_BEARER_TOKEN")
 
 def read_data(filename):
     data = pd.read_csv(filename, sep='\t')
