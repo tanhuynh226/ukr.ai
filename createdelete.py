@@ -6,7 +6,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 fileID = openai.File.create(
-  file=open("training_data2_prepared.jsonl", encoding='utf-8'),
+  file=open("patricktrain_prepared.jsonl", encoding='utf-8'),
   purpose='classifications')
 
 print(fileID['id'])

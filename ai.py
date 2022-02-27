@@ -26,14 +26,17 @@ def answer(prompt):
 
     return response['label']
 
+# nobirdwatch training : file-5tWsG9oQZyrIW5JGt6YvKas3
+# birdwatch + manual training : file-R5VA59nOEqhU4L0QgR3EyGTK
+
 def main():
     response = openai.Classification.create(
-    file = "file-R5VA59nOEqhU4L0QgR3EyGTK",
-    query = "Ukraine is winning the war.",
+    file = "file-i5K6dpIvAcYzNDDUW60bX6Kn",
+    query = "Russia started the conflict with Ukraine.",
     search_model = "curie", 
     model = "curie", 
     labels = ["NOT_MISLEADING", "MISINFORMED_OR_POTENTIALLY_MISLEADING"],
-    max_examples = 200)
+    max_examples = 1000)
     
     print(response['label'])
 
