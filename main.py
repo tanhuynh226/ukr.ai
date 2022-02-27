@@ -13,8 +13,11 @@ def handle_text(request):
     user_prompt = str(request)
     result = answer(user_prompt)
     response = {
-        'classification' : parse_label(result),
-        'probability' : ''
+        'content' : user_prompt,
+        'classification' : parse_label(result['label']),
+        'misleading' : result['Misinformed_or_potentially_misleading'],
+        'not_misleading' : result['Not_misleading'],
+        'unknown' : result['Unknown']
     }
     return response
 
@@ -28,18 +31,21 @@ def handle_tweet(request):
     user_prompt = str(clean_text(fetch_tweets_from_url(request)))
     result = answer(user_prompt)
     response = {
-        'classification' : parse_label(result),
-        'probability' : ''
+        'content' : user_prompt,
+        'classification' : parse_label(result['label']),
+        'misleading' : result['Misinformed_or_potentially_misleading'],
+        'not_misleading' : result['Not_misleading'],
+        'unknown' : result['Unknown']
     }
     return response
 
 def parse_label(label):
     if label == "Misinformed_or_potentially_misleading":
-        label = "Misleading"
+        label = "misleading"
     elif label == "Not_misleading":
-        label = "Not misleading"
+        label = "not_misleading"
     else:
-        label = "Unrelated"
+        label = "unrelated"
     return label
 
 def handler(request):
