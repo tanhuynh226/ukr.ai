@@ -1,8 +1,9 @@
 # Welcome to [ukr.ai](https://ukrai.netlify.app/)!
 
-<p style="text-align: center;"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/cover.png"></p>
-
 [Try our project out](https://ukrai.netlify.app/)—it's best used on mobile.
+
+<p style="text-align: center;" align="center"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/cover.png"></p>
+
 
 ## Inspiration
 
