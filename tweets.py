@@ -1,11 +1,13 @@
 import requests
 import re
+import os
 from urllib.parse import urlparse
+from dotenv import load_dotenv
 
 """This module contains methods related to fetching and processing tweets"""
 
+load_dotenv()
 ENDPOINT = 'https://api.twitter.com/2/tweets'
-#tans: BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAIKlZgEAAAAA%2FPzTUcIMxE%2F1YSRh2b60shhO6C4%3DJFNP2ksUXD7qgTGxmhmkG6DHiCL4FvwNHR9gfLujioOff430au' 
 BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAHCXZgEAAAAAsFWHTYPNRHdi7ogP8CUBN%2FoM9QQ%3D1Id3Z7UFSoiCrknB7zA2BucLTzdpwgG3hdMY4cz5a5IvrzRYoL'
 
 def _create_headers(bearer_token):

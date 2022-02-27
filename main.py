@@ -49,9 +49,33 @@ def parse_label(label):
     return label
 
 def handler(request):
+    if request.method == 'OPTIONS':
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+
+        return ('', 204, headers)
+
+    # Set CORS headers for the main request
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    }
+    
     frontend = request.json['type']
+    response = {
+        "classification": "Unknown",
+        "content": "",
+        'misleading' : 0.0,
+        'not_misleading' : 0.0,
+        'unknown' : 0.0
+    }
     if frontend == "twitter":
         response = handle_tweet(request.json['payload'])
     elif frontend == "text":
         response = handle_text(request.json['payload'])
-    return jsonify(response)
+    return (jsonify(response), 200, headers)

@@ -18,7 +18,7 @@ def answer(prompt):
     file = "file-R5VA59nOEqhU4L0QgR3EyGTK",
     query = prompt,
     search_model = "curie", 
-    model = "curie", 
+    model = "ada", 
     labels = labels,
     logprobs = 3,
     max_examples = 1000)
@@ -53,41 +53,11 @@ def answer(prompt):
 # nobirdwatch training : file-5tWsG9oQZyrIW5JGt6YvKas3
 # birdwatch + manual training : file-R5VA59nOEqhU4L0QgR3EyGTK
 # patrick : file-i5K6dpIvAcYzNDDUW60bX6Kn
+# 2-24: file-d9g34SRx4Vd0aJkJkNZs1dId
 
 def main():
-    response = openai.Classification.create(
-    file = "file-d9g34SRx4Vd0aJkJkNZs1dId",
-    query = "There weren't any reports of explosions in Kiev.",
-    search_model = "curie", 
-    model = "ada", 
-    labels = labels,
-    logprobs = 3,
-    max_examples = 200)
-
-    first_token_to_label = {
-        tokenizer.decode([tokens[0]]).strip().lower(): label 
-        for label, tokens in labels_tokens.items()
-    }
-
-    top_logprobs = response["completion"]["choices"][0]["logprobs"]["top_logprobs"][0]
-    token_probs = defaultdict(float)
-    for token, logp in top_logprobs.items():
-        token_probs[token.strip().lower()] += np.exp(logp)
-
-    label_probs = {
-        first_token_to_label[token]: prob 
-        for token, prob in token_probs.items()
-        if token in first_token_to_label
-    }
-
-# Fill in the probability for the special "Unknown" label.
-    if sum(label_probs.values()) < 1.0:
-        label_probs["Unknown"] = 1.0 - sum(label_probs.values())
-
-    label_probs['label'] = response['label']
-    print(label_probs)
-    
-    # print(response['label'])
+    result = answer("Russia started the conflict with Ukraine.")
+    print(result)
 
 if __name__ == "__main__":
     main()
