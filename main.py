@@ -35,8 +35,10 @@ def handle_tweet(request):
     Returns:
         AI's response to given tweet
     """
-    return handle_prompt(str(clean_text(fetch_tweets_from_url(request))))
-
+    text = fetch_tweets_from_url(request)
+    response = handle_prompt(str(clean_text(text)))
+    response['content'] = text
+    return response
 
 def parse_label(label):
     if label == "Misinformed_or_potentially_misleading":
