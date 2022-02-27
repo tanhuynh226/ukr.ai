@@ -35,9 +35,9 @@ def handle_tweet(request):
     Returns:
         AI's response to given tweet
     """
-    text = fetch_tweets_from_url(request)
-    response = handle_prompt(str(clean_text(text)))
-    response['content'] = text
+    tweet = fetch_tweets_from_url(request)
+    response = handle_prompt(str(clean_text(tweet)))
+    response['content'] = tweet['text']
     return response
 
 def parse_label(label):
