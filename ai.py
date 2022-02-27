@@ -55,6 +55,15 @@ def answer(prompt):
 # patrick : file-i5K6dpIvAcYzNDDUW60bX6Kn
 # 2-24: file-d9g34SRx4Vd0aJkJkNZs1dId
 
+# Takes input of .jsonl dataset name
+# Returns file ID used for answer()
+def train(dataset):
+    fileID = openai.File.create(
+            file=open(dataset, encoding='utf-8'),
+            purpose='classifications')['id']
+    return fileID
+
+
 def main():
     result = answer("Russia started the conflict with Ukraine.")
     print(result)

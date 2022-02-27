@@ -1,14 +1,5 @@
-import os
-from dotenv import load_dotenv
-import openai
+import ai
 
-load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-fileID = openai.File.create(
-  file=open("training_data_02-24-2022_prepared.jsonl", encoding='utf-8'),
-  purpose='classifications')
-
-print(fileID['id'])
+print(ai.train('test_training - Sheet1 (5)_prepared.jsonl'))
 
 # openai.File.delete("file-30S3eZx2cjWP4zlvpUonSAG7")
