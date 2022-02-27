@@ -1,8 +1,8 @@
 # Welcome to [ukr.ai](https://ukrai.netlify.app/)!
 
-<p style="text-align: center;"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/cover.png"></p>
-
 [Try our project out](https://ukrai.netlify.app/)—it's best used on mobile.
+
+<p style="text-align: center;"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/cover.png"></p>
 
 ## Inspiration
 
@@ -16,7 +16,7 @@ We believe that creating an AI that could constantly review this mass influx of 
 
 The UI is simple. There’s a text box where a user can enter some news they’ve heard, a link to a tweet, or a “fact” that doesn’t sit right. This message is parsed and analyzed by our fine-tuned GPT-3 AI model. Our application will tell you if the statement is misleading or not.
 
-<p style="text-align: left;"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/demonstrate_tweet.gif"></p>
+<p style="text-align: center;"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/demonstrate_tweet.gif"></p>
 
 ## How we built it
 
