@@ -1,12 +1,12 @@
 from ai import answer
-from tweets import fetch_tweets_from_url, get_clean_text
+from tweets import fetch_tweets_from_url, clean_text
 from flask import jsonify
 import requests
 
 def handle_text(request):
     """Responds to any HTTP request.
     Args:
-        request (flask.Request): HTTP request object.
+        payload of request (flask.Request): HTTP request object.
     Returns:
         AI's response to given text
     """
@@ -21,7 +21,7 @@ def handle_text(request):
 def handle_tweet(request):
     """Responds to any HTTP request.
     Args:
-        request (flask.Request): HTTP request object.
+        payload of request (flask.Request): HTTP request object.
     Returns:
         AI's response to given tweet
     """
@@ -39,5 +39,5 @@ def handler(request):
     if frontend == "twitter":
         response = handle_tweet(request.json['payload'])
     elif frontend == "text":
-        response = (request.json['payload'])
+        response = handle_text(request.json['payload'])
     return jsonify(response)
