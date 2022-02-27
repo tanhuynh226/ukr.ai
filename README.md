@@ -59,7 +59,7 @@ We also leveraged Three.JS, one of the core libraries used for 3D graphics on th
 
 ## What we learned
 
-* Training and fine-tuning a GPT-3 model to be able to classify claims as misleading or non-misleading
+* Training, fine-tuning, and receiving a response from a GPT-3 model to be able to classify claims as misleading or non-misleading
   * Finding and labeling data points is challenging 
 * Our first time working with Google Cloud Functions to deploy the back-end, which allows front-end to make event-triggered function calls
 * How to use Three.JS to create responsive and interactive 3D animations in the browser
