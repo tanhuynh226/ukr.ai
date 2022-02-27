@@ -56,13 +56,13 @@ def answer(prompt):
 
 def main():
     response = openai.Classification.create(
-    file = "file-R5VA59nOEqhU4L0QgR3EyGTK",
-    query = "Russia plans to kill any Ukrainians that refuse to surrender.",
+    file = "file-d9g34SRx4Vd0aJkJkNZs1dId",
+    query = "There weren't any reports of explosions in Kiev.",
     search_model = "curie", 
     model = "ada", 
     labels = labels,
     logprobs = 3,
-    max_examples = 1000)
+    max_examples = 200)
 
     first_token_to_label = {
         tokenizer.decode([tokens[0]]).strip().lower(): label 
