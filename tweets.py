@@ -48,7 +48,7 @@ def fetch_tweets_from_url(url):
         'ids': id_from_url('https://twitter.com/UCIrvine/status/1497267692838944772'),
         'tweet.fields': 'entities'
     }
-    return _fetch_response(_create_headers(BEARER_TOKEN), params).json()['data']
+    return _fetch_response(_create_headers(BEARER_TOKEN), params).json()['data'][0]
 
 
 # Takes tweet as a dictionary

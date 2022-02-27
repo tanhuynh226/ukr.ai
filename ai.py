@@ -29,7 +29,7 @@ def answer(prompt):
 def main():
     response = openai.Classification.create(
     file = "file-R5VA59nOEqhU4L0QgR3EyGTK",
-    query = "Russia is winning the war.",
+    query = "Ukraine is winning the war.",
     search_model = "curie", 
     model = "curie", 
     labels = ["NOT_MISLEADING", "MISINFORMED_OR_POTENTIALLY_MISLEADING"],
