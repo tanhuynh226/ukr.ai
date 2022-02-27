@@ -1,7 +1,4 @@
-from venv import create
 import pandas as pd
-import requests
-import re
 from statistics import mode
 
 import tweets

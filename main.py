@@ -1,7 +1,6 @@
 from ai import answer
 from tweets import fetch_tweets_from_url, clean_text
 from flask import jsonify
-import requests
 
 def handle_prompt(prompt):
     result = answer(prompt)
