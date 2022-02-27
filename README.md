@@ -4,7 +4,6 @@
 
 <p style="text-align: center;" align="center"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/cover.png"></p>
 
-
 ## Inspiration
 
 **Social media is the king of disinformation.** Astroturfing political elections through the widespread use of Twitter bots, creating narratives based on doctored images, or nations using widespread propaganda through mass media to seize control of regions—when controversy strikes, the internet is there to make sure the facts and fiction are intertwined.
@@ -17,7 +16,7 @@ We believe that creating an AI that could constantly review this mass influx of 
 
 The UI is simple. There’s a text box where a user can enter some news they’ve heard, a link to a tweet, or a “fact” that doesn’t sit right. This message is parsed and analyzed by our fine-tuned GPT-3 AI model. Our application will tell you if the statement is misleading or not.
 
-<p style="text-align: center;" align="center"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/demonstrate_tweet.gif"></p>
+<p style="text-align: center;"><img src="https://github.com/tanhuynh226/hackuci2022-backend/blob/main/images/demonstrate_tweet.gif"></p>
 
 ## How we built it
 
@@ -61,10 +60,11 @@ We also leveraged Three.JS, one of the core libraries used for 3D graphics on th
 ## What we learned
 
 * Training and fine-tuning a GPT-3 model to be able to classify claims as misleading or non-misleading
-* Deployment of back-end using Google Cloud Functions to allow front-end to make event-triggered function calls
+  * Finding and labeling data points is challenging 
+* Our first time working with Google Cloud Functions to deploy the back-end, which allows front-end to make event-triggered function calls
 * How to use Three.JS to create responsive and interactive 3D animations in the browser
 * How to use Pandas to parse imbalanced .tsv/.csv data into .jsonl files that GPT-3 can use to optimize its model
-* Configuring and setting up python environments
+* Configuring and setting up Python environments
 
 ## What's next for ukr.ai
 
