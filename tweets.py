@@ -53,7 +53,7 @@ def fetch_tweets_from_url(url):
 
 # Takes tweet as a dictionary
 # Returns string with mentions and links in tweet text removed 
-def get_clean_text(tweet):
+def clean_text(tweet):
     if 'entities' not in tweet:
         return tweet['text']
 

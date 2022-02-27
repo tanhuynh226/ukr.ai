@@ -1,5 +1,6 @@
 from ai import answer
 from tweets import fetch_tweets_from_url, get_clean_text
+from flask import jsonify
 import requests
 
 def handle_text(request):
@@ -24,7 +25,7 @@ def handle_tweet(request):
     Returns:
         AI's response to given tweet
     """
-    user_prompt = str(get_clean_text(fetch_tweets_from_url(request)))
+    user_prompt = str(clean_text(fetch_tweets_from_url(request)))
     result = answer(user_prompt)
     response = {
         'classification' : result,
@@ -39,4 +40,4 @@ def handler(request):
         response = handle_tweet(request.json['payload'])
     elif frontend == "text":
         response = (request.json['payload'])
-    return response
+    return jsonify(response)
