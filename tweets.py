@@ -1,14 +1,15 @@
 import requests
 import re
 import os
+from dotenv import load_dotenv
 from urllib.parse import urlparse
 from dotenv import load_dotenv
 
 """This module contains methods related to fetching and processing tweets"""
 
 load_dotenv()
+BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 ENDPOINT = 'https://api.twitter.com/2/tweets'
-BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAHCXZgEAAAAAsFWHTYPNRHdi7ogP8CUBN%2FoM9QQ%3D1Id3Z7UFSoiCrknB7zA2BucLTzdpwgG3hdMY4cz5a5IvrzRYoL'
 
 def _create_headers(bearer_token):
     headers = {"Authorization": f"Bearer {bearer_token}"}
@@ -47,7 +48,7 @@ def fetch_tweets_from_url(url):
         return urlparse(url).path.split('/')[-1]
 
     params = {
-        'ids': id_from_url('https://twitter.com/UCIrvine/status/1497267692838944772'),
+        'ids': id_from_url(url),
         'tweet.fields': 'entities'
     }
     return _fetch_response(_create_headers(BEARER_TOKEN), params).json()['data'][0]

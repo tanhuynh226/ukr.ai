@@ -21,7 +21,7 @@ def answer(prompt):
     model = "ada", 
     labels = labels,
     logprobs = 3,
-    max_examples = 1000)
+    max_examples = 200)
 
     first_token_to_label = {
         tokenizer.decode([tokens[0]]).strip().lower(): label 
