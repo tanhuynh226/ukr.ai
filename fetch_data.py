@@ -18,10 +18,15 @@ def read_data(filename):
 def get_label_by_id(data, id):
     return ''.join(mode(data[data.tweetId == int(id)].classification))
 
-
+import datetime
+from dateutil import parser
+import pytz
 # Returns True if keyword tweet contains keywords and is not duplicate 
 def is_relevant(tweet, keywords, current_data):
-    return tweet['id'] not in current_data['metadata'] and any(f' {word} ' in tweet['text'].lower() for word in keywords)
+    if tweet['id'] not in current_data['metadata'] and any(f' {word} ' in tweet['text'].lower() for word in keywords) and parser.parse(tweet['created_at']) > pytz.utc.localize(datetime.datetime(2022, 2, 1)):
+        print(tweet['created_at'])
+        return True
+    return False
 
 
 
@@ -45,7 +50,7 @@ def process_data(data, keywords):
     for id_chunk in id_list:
         for tweet in (tweet for tweet in tweets.fetch_tweets_from_ids(id_chunk) if is_relevant(tweet, keywords, fetched_data)):
                 # If not a duplicate tweet, clean it up and include it in our dataset
-                fetched_data['text'].append(tweets.get_clean_text(tweet))
+                fetched_data['text'].append(tweets.clean_text(tweet))
                 fetched_data['label'].append(get_label_by_id(data, tweet['id']))
                 fetched_data['metadata'].append(tweet['id'])
 
@@ -61,5 +66,6 @@ if __name__ == '__main__':
         keywords = keywords.split('\n')
 
     data = process_data(read_data(DATA_FILE), keywords)
-    data.to_csv("training_data1.csv", encoding='utf-8', index=False)
+    data.to_csv("training_data_02-24-2022.csv", encoding='utf-8', index=False)
+    print('Done fetching.')
 
