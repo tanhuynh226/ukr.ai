@@ -22,7 +22,7 @@ The UI is simple. There’s a text box where a user can enter some news they’v
 
 ### AI and back-end
 
-For our AI model, we leveraged OpenAI's GPT-3 Curie and Ada engines. To train our models, we needed a large dataset that could tell the AI if a statement was misleading or not. We stumbled across Twitter's Birdwatch, a periodically-updated dataset containing entries of tweet IDs and their respective trustiworthiness. Using Birdwatch, we mapped each tweet ID to its text content through Twitter API lookup, determined if the tweet is relevant to the current conflict, parsed the text, and added the label to our training dataset containing statements and their truth value. After formatting our data for GPT-3, we fed it into our AI, which learned what kind of statement was true and what was false.
+For our AI model, we leveraged OpenAI's GPT-3 Curie and Ada engines. To train our models, we needed a large dataset that could tell the AI if a statement was misleading or not. We stumbled across Twitter's Birdwatch, a periodically-updated dataset containing entries of tweet IDs and their respective trustworthiness. Using Birdwatch, we mapped each tweet ID to its text content through Twitter API lookup, determined if the tweet is relevant to the current conflict, parsed the text, and added the label to our training dataset containing statements and their truth value. After formatting our data for GPT-3, we fed it into our AI, which learned what kind of statement was true and what was false.
 
 With a knowledgeable AI, the front-end could query our model with text or a Twitter link—if it was a link, we fetched the tweet's text from Twitter API—and responded with our AI's classification (i.e. misleading, not misleading, unknown) and levels of confidence.
 
