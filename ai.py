@@ -13,6 +13,8 @@ labels = ["NOT_MISLEADING", "MISINFORMED_OR_POTENTIALLY_MISLEADING"]
 labels = [label.strip().lower().capitalize() for label in labels]
 labels_tokens = {label: tokenizer.encode(" " + label) for label in labels}
 
+# Takes the prompt being inputted from the frontend
+# Returns classification and probabilities for each classification
 def answer(prompt):
     response = openai.Classification.create(
     file = "file-R5VA59nOEqhU4L0QgR3EyGTK",

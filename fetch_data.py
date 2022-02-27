@@ -18,13 +18,9 @@ def read_data(filename):
 def get_label_by_id(data, id):
     return ''.join(mode(data[data.tweetId == int(id)].classification))
 
-import datetime
-from dateutil import parser
-import pytz
 # Returns True if keyword tweet contains keywords and is not duplicate 
 def is_relevant(tweet, keywords, current_data):
-    if tweet['id'] not in current_data['metadata'] and any(f' {word} ' in tweet['text'].lower() for word in keywords) and parser.parse(tweet['created_at']) > pytz.utc.localize(datetime.datetime(2022, 2, 1)):
-        print(tweet['created_at'])
+    if tweet['id'] not in current_data['metadata'] and any(f' {word} ' in tweet['text'].lower() for word in keywords):
         return True
     return False
 
