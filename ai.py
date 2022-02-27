@@ -16,14 +16,21 @@ labels_tokens = {label: tokenizer.encode(" " + label) for label in labels}
 # Takes the prompt being inputted from the frontend
 # Returns classification and probabilities for each classification
 def answer(prompt):
-    response = openai.Classification.create(
-    file = "file-R5VA59nOEqhU4L0QgR3EyGTK",
-    query = prompt,
-    search_model = "curie", 
-    model = "ada", 
-    labels = labels,
-    logprobs = 3,
-    max_examples = 200)
+    try:
+        response = openai.Classification.create(
+        file = "file-R5VA59nOEqhU4L0QgR3EyGTK",
+        query = prompt,
+        search_model = "curie", 
+        model = "ada", 
+        labels = labels,
+        logprobs = 3,
+        max_examples = 200)
+    except openai.InvalidRequestError:
+        return {'label': 'Unknown',
+                'Misinformed_or_potentially_misleading': 0.0,
+                'Not_misleading': 0.0,
+                'Unknown': 0.0
+                }
 
     first_token_to_label = {
         tokenizer.decode([tokens[0]]).strip().lower(): label 
